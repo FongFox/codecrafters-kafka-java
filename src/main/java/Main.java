@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
@@ -23,6 +24,10 @@ public class Main {
             ByteBuffer buffer = ByteBuffer.allocate(8);
             buffer.putInt(0); //message_size
             buffer.putInt(7); //correlation_id
+
+            OutputStream outputStream = clientSocket.getOutputStream();
+            outputStream.write(buffer.array());
+            outputStream.flush();
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
         } finally {
